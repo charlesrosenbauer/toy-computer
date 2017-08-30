@@ -12,13 +12,14 @@
 
 
 void updateRAM (RAM* r){
-  WORD addr = r->addr;
+  WORD addr = r->iaddr;
   WORD in   = r->in;
   int  rw   = r->rw;
-  r->addr.u64 = 0;
-  r->in.u64   = 0;
-  r->rw       = 0;
-  r->out.u64  = 0;
+  r->iaddr.u64 = 0;
+  r->oaddr.u64 = 0;
+  r->in.u64    = 0;
+  r->rw        = 0;
+  r->out.u64   = 0;
 
   if(addr.u64 > 33554432){
     printf("Invalid RAM Address!! %i\n", (int)addr.u64);
@@ -31,9 +32,10 @@ void updateRAM (RAM* r){
     return;
   }
 
-  if(rw == 0)
+  if(rw == 0){
     r->data[addr.u64] = in;     //Read Mode
-  else
+    r->oaddr = addr;
+  }else{
     r->out = r->data[addr.u64]; //Write Mode
-
+  }
 }
