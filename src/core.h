@@ -27,4 +27,14 @@ typedef struct{
 
 
 
+void updateCore(CORE*, RAM*);
+
+
+
+
+
+
+
+
+
 #endif
