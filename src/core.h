@@ -2,6 +2,7 @@
 #define __CORE_HEADER__
 #include <stdint.h>
 #include "types.h"
+#include "ram.h"
 
 
 

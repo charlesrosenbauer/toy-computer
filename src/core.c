@@ -23,7 +23,7 @@ void updateCore(CORE* c, RAM* r){
   int regB = (instruction.u64 & 0x38) >> 3;
   int op   =  instruction.u64 >> 6;
 
-  c->ip++;
+  c->ip = c->ip + 1;
 
   switch(op){
     case 0x00: //NOP
@@ -98,19 +98,19 @@ void updateCore(CORE* c, RAM* r){
       c->registers[regB].f64 = fmod(fa.f64, fb.f64);
     }break;
 
-    case 0x10:  //JNGF
+    case 0x10:  //JNGI
       c->ip = (c->registers[regA].i64 <  0)? c->registers[regB].i64 : c->ip;
     break;
 
-    case 0x11:  //JPSF
+    case 0x11:  //JPSI
       c->ip = (c->registers[regA].i64 >  0)? c->registers[regB].i64 : c->ip;
     break;
 
-    case 0x12:  //JZRF
+    case 0x12:  //JZRI
       c->ip = (c->registers[regA].i64 == 0)? c->registers[regB].i64 : c->ip;
     break;
 
-    case 0x13:  //JNZF
+    case 0x13:  //JNZI
       c->ip = (c->registers[regA].i64 != 0)? c->registers[regB].i64 : c->ip;
     break;
 
@@ -146,6 +146,9 @@ void updateCore(CORE* c, RAM* r){
       c->registers[regA].f64++;
     break;
 
+    case 0xFD:  //Print Newline
+      printf("\n");
+    break;
 
     case 0xFE:  //Print Char
       printf("%c", (char)c->registers[regA].i64);
